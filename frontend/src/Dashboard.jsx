@@ -1,53 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import GoogleDashBoard from './components/GoogleDashBoard';
+import GithubDashBoard from './components/GitHubDashBoard';
 import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
-  const [userInfo, setUserInfo] = useState(null);
-  const navigate = useNavigate();
+function Dashboard() {
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const data = localStorage.getItem('user-info');
-    if (data) {
-      const userData = JSON.parse(data);
-      setUserInfo(userData);
-    } else {
-      navigate('/login');
+    const storedUser = localStorage.getItem('user-info');
+    let provider = null;
+    let userData = null;
+
+    try {
+        const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+        provider = parsedUser?.authProvider || null;
+        userData = parsedUser || null;
+    } catch (error) {
+        console.error("Failed to parse 'user-info' from localStorage:", error);
+        localStorage.removeItem('user-info');
     }
-  }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('user-info');
-    navigate('/login');
-  };
+    console.log("Auth Provider:", provider);
+    // console.log("User Data:", userData);
 
-  return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-[#111] border border-white/10 rounded-3xl shadow-[0_0_30px_rgba(255,255,255,0.05)] p-8 text-center">
-        {userInfo && (
-          <>
-            <div className="flex justify-center mb-6">
-              <img
-                src={userInfo.image}
-                alt={userInfo.name}
-                className="w-28 h-28 rounded-full object-cover border-4 border-white/10 shadow-md hover:shadow-red-500/30 transition duration-300"
-              />
+    if (provider === 'google') {
+        return <GoogleDashBoard userData={userData} />;
+    }
+
+    if (provider === 'github') {
+        return <GithubDashBoard userData={userData} />;
+    }
+
+    return (
+        <div className="flex items-center justify-center h-screen bg-black text-white">
+            <div className="bg-gray-900 p-10 rounded-2xl shadow-2xl text-center w-full max-w-md">
+                <h2 className="text-3xl font-bold mb-4">Access Restricted</h2>
+                <p className="text-lg mb-6 text-gray-300">
+                    You must log in using Google or GitHub to access the dashboard.
+                </p>
+                <button
+                    onClick={() => navigate('/login')}
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-300"
+                >
+                    Go to Login
+                </button>
             </div>
-            <h1 className="text-3xl font-bold text-white mb-1 tracking-wide">
-              Welcome, <span className="text-red-500">{userInfo.name}</span>
-            </h1>
-            <p className="text-gray-400 mb-6">{userInfo.email}</p>
-
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-red-500/40"
-            >
-              Logout
-            </button>
-          </>
-        )}
-      </div>
-    </div>
-  );
-};
+        </div>
+    );
+}
 
 export default Dashboard;
