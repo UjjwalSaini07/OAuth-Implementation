@@ -92,6 +92,17 @@ const Home = () => {
             />
             Sign in with GitHub
           </button>
+
+          <button
+            className="flex items-center justify-center gap-3 w-full bg-white text-black py-3 px-6 rounded-full font-medium shadow-md hover:shadow-xl hover:-translate-y-[1px] transition-all duration-200"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/2048px-Facebook_f_logo_%282021%29.svg.png"
+              alt="Facebook"
+              className="w-5 h-5"
+            />
+            Sign in with Facebook
+          </button>
         </div>
       </div>
     </div>
