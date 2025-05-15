@@ -7,13 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-.env
-.env.logs
-
 /frontend/node_modules
 /backend/node_modules
 /frontend/.env
 /backend/.env
+
+.env
+.env.local
+
 
 #Node modulars
 node_modules
