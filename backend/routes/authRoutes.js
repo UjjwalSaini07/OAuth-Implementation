@@ -1,5 +1,7 @@
 import express from 'express';
+import passport from 'passport';
 import { googleAuth } from '../controllers/authController.js';
+import { githubAuth, githubCallback } from '../controllers/GithubauthController.js';
 
 const router = express.Router();
 
@@ -19,11 +21,16 @@ router.get('/', (req, res) => {
                 endpoint: '/auth/google',
                 description: 'Initiate Google Authentication process',
             },
+            {
+                method: 'GET',
+                endpoint: '/auth/github',
+                description: 'Initiate GitHub Authentication process',
+            },
         ],
     });
 });
 
-// Route to handle Google Authentication
+// Google Authentication
 router.get('/google', async (req, res, next) => {
     try {
         await googleAuth(req, res);
@@ -34,6 +41,24 @@ router.get('/google', async (req, res, next) => {
             status: 'error',
         });
     }
+});
+
+// GitHub Authentication Route
+router.get('/github', githubAuth);
+
+// GitHub Callback Route
+router.get(
+    '/github/callback',
+    passport.authenticate('github', { failureRedirect: '/auth/failure' }),
+    githubCallback
+);
+
+// Failure Route
+router.get('/failure', (req, res) => {
+    res.status(401).json({
+        message: 'GitHub Authentication failed.',
+        status: 'error',
+    });
 });
 
 export default router;
