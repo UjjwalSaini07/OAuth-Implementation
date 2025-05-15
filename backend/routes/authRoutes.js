@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
-import { googleAuth } from '../controllers/authController.js';
-import { githubAuth, githubCallback } from '../controllers/GithubauthController.js';
+import { googleAuth } from '../controllers/Google_authController.js';
+import { githubAuth, githubCallback } from '../controllers/Github_authController.js';
 
 const router = express.Router();
 
