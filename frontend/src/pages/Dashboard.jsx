@@ -1,7 +1,7 @@
 import React from 'react';
-import GoogleDashBoard from './components/GoogleDashBoard';
-import GithubDashBoard from './components/GitHubDashBoard';
 import { useNavigate } from 'react-router-dom';
+import GoogleDashBoard from '../components/Dashboard/GoogleDashBoard';
+import GithubDashBoard from '../components/Dashboard/GitHubDashBoard';
 
 function Dashboard() {
     const navigate = useNavigate();

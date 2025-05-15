@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import { googleAuth } from "./api";
+import { googleAuth } from "../components/utils/api";
 
 const Home = () => {
   const navigate = useNavigate();

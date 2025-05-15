@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Home from "./Home";
-import Dashboard from "./Dashboard";
-import RefreshHandler from "./RefreshHandler";
-import NotFound from "./Error404";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import RefreshHandler from "./components/utils/RefreshHandler";
+import NotFound from "./components/common/Error404";
 
 function App() {
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
