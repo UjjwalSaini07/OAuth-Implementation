@@ -5,3 +5,7 @@ const api = axios.create({
 });
 
 export const googleAuth = (code) => api.get(`/google?code=${code}`);
+export const githubAuth = async () => {
+    const result = await api.get('/github/callback');
+    return result.data;
+};

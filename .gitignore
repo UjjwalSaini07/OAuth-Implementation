@@ -9,8 +9,15 @@ lerna-debug.log*
 
 /frontend/node_modules
 /backend/node_modules
+/frontend/.env
 /backend/.env
 
+.env
+.env.local
+
+
+#Node modulars
+node_modules
 dist
 dist-ssr
 *.local
@@ -25,6 +32,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
 
 client_secret_732944236034-2cks51rmgh36mdmbdnlue7826r4ja94a.apps.googleusercontent.com.json

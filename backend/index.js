@@ -2,7 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
-import './models/dbConnect.js';
+import session from 'express-session';
+import passport from 'passport';
+import './config/dbConnect.js';
 import AppError from './utils/appError.js';
 import authRoutes from './routes/authRoutes.js';
 
@@ -11,9 +13,11 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
 
-// Redirect root '/' to '/auth'
 app.use('/', (req, res, next) => {
     if (req.originalUrl === '/') {
         res.redirect('/auth');
@@ -22,7 +26,15 @@ app.use('/', (req, res, next) => {
     }
 });
 
-// Attach authRoutes middleware
+app.use(
+    session({
+        secret: process.env.JWT_SECRET,
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/auth', authRoutes);
 
 // Handle undefined routes

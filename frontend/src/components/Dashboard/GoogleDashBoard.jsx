@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
+const GoogleDashboard = () => {
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
 
@@ -50,4 +50,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default GoogleDashboard;
