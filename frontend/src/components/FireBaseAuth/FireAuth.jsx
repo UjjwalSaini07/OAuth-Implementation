@@ -1,5 +1,6 @@
-import React from 'react';
-import { initializeApp } from 'firebase/app';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   signInWithPopup,
@@ -7,8 +8,7 @@ import {
   GithubAuthProvider,
   FacebookAuthProvider,
   fetchSignInMethodsForEmail,
-  linkWithCredential,
-} from 'firebase/auth';
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -19,51 +19,65 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const FireOAuth = () => {
-  const storeUserData = (user) => {
-    const userData = {
-      uid: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-      photoURL: user.photoURL,
+const FireAuth = () => {
+  const navigate = useNavigate();
+
+  const handleAuthSuccess = (user, providerName) => {
+    const { displayName, email, photoURL, accessToken } = user;
+    const userInfo = {
+      name: displayName,
+      email,
+      image: photoURL,
+      token: accessToken,
+      authProvider: providerName,
     };
 
-    localStorage.setItem('user', JSON.stringify(userData));
-    console.log('User data stored in localStorage:', userData);
+    localStorage.setItem("user-info", JSON.stringify(userInfo));
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 500);
+  };
+
+  const handleAuthError = async (error, provider) => {
+    if (error.code === "auth/account-exists-with-different-credential") {
+      const email = error.customData?.email;
+      const methods = await fetchSignInMethodsForEmail(auth, email);
+      if (methods?.includes("google.com")) {
+        alert(
+          "This email is associated with a Google account. Sign in with Google first."
+        );
+      } else {
+        alert(
+          "This email is associated with another provider. Sign in with that provider first."
+        );
+      }
+    } else {
+      console.error("Error during sign-in:", error);
+      alert("Authentication failed. Please try again.");
+    }
   };
 
   const handleSignIn = async (provider) => {
     try {
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      storeUserData(user);
-      alert(`Welcome, ${user.displayName}`);
+      const credential =
+        provider instanceof GoogleAuthProvider
+          ? GoogleAuthProvider.credentialFromResult(result)
+          : provider instanceof GithubAuthProvider
+          ? GithubAuthProvider.credentialFromResult(result)
+          : FacebookAuthProvider.credentialFromResult(result);
+
+      const token = credential?.accessToken;
+
+      // Extract provider name and remove ".com" if present
+      let providerName = provider.providerId.replace(".com", "");
+
+      handleAuthSuccess({ ...result.user, accessToken: token }, providerName);
     } catch (error) {
-      if (error.code === 'auth/account-exists-with-different-credential') {
-        const email = error.customData.email; // Email causing the issue
-        const pendingCred = error.credential; // New credential to link
-
-        try {
-          // Get sign-in methods for the existing account
-          const methods = await fetchSignInMethodsForEmail(auth, email);
-
-          if (methods.includes('google.com')) {
-            alert('This email is already associated with a Google account. Sign in using Google first, then link with Facebook.');
-          } else {
-            alert('This email is already associated with another provider. Sign in with the existing provider, then link accounts.');
-          }
-        } catch (fetchError) {
-          console.error('Error fetching sign-in methods:', fetchError);
-          alert('Error linking accounts. Please try again.');
-        }
-      } else {
-        console.error('Error during sign-in:', error);
-        alert('Authentication failed. Please try again.');
-      }
+      handleAuthError(error, provider);
     }
   };
 
@@ -122,4 +136,4 @@ const FireOAuth = () => {
   );
 };
 
-export default FireOAuth;
+export default FireAuth;

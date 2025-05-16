@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NodeAuth from "../components/NodejsAuth/NodeAuth";
 import FireAuth from "../components/FireBaseAuth/FireAuth";
 
 const Home = () => {
   const [mode, setMode] = useState("Nodejs-OAuth");
 
+  // Load mode from localStorage on first render
+  useEffect(() => {
+    const savedMode = localStorage.getItem("authMode");
+    if (savedMode) {
+      setMode(savedMode);
+    }
+  }, []);
+
+  // Save mode to localStorage whenever it changes
   const handleModeChange = (selectedMode) => {
     setMode(selectedMode);
+    localStorage.setItem("authMode", selectedMode);
   };
 
   const renderContent = () => {
