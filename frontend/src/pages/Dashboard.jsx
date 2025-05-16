@@ -53,7 +53,7 @@ function Dashboard() {
             the dashboard.
           </p>
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/")}
             className="px-7 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-cyan-600/40 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
           >
             Continue to Login →
