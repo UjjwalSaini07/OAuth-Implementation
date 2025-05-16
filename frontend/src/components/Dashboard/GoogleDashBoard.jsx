@@ -11,13 +11,13 @@ const GoogleDashboard = () => {
       const userData = JSON.parse(data);
       setUserInfo(userData);
     } else {
-      navigate('/login');
+      navigate('/');
     }
   }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('user-info');
-    navigate('/login');
+    navigate('/');
   };
 
   return (

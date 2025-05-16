@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import RefreshHandler from "./components/utils/RefreshHandler";
 import NotFound from "./components/common/Error404";
+import ThirdPartyOAuth from "./components/ThirdPartyAuth/ThirdPartyOAuth";
 
 function App() {
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -12,6 +13,7 @@ function App() {
 
   useEffect(() => {
     const userInfo = localStorage.getItem("user-info");
+    const authMode = localStorage.getItem("authMode");
     setIsAuthenticated(!!userInfo);
   }, []);
 
@@ -27,7 +29,7 @@ function App() {
   };
 
   const PrivateRoute = ({ element }) => {
-    return isAuthenticated ? element : <Navigate to="/login" />;
+    return isAuthenticated ? element : <Navigate to="/" />;
   };
 
   return (
@@ -35,9 +37,10 @@ function App() {
       <BrowserRouter>
         <RefreshHandler setIsAuthenticated={setIsAuthenticated} />
         <Routes>
-          <Route path="/login" element={<Home setIsAuthenticated={handleAuthentication} />}/>
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Home setIsAuthenticated={handleAuthentication} />}/>
+          {/* <Route path="/" element={<Navigate to="/login" />} /> */}
           <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />}/>
+          <Route path="/auth0/authentic" element={<ThirdPartyOAuth/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

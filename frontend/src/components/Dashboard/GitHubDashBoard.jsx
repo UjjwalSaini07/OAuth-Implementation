@@ -13,16 +13,16 @@ const GitHubDashboard = () => {
       } catch (error) {
         console.error("Error parsing user info:", error);
         localStorage.removeItem('user-info');
-        navigate('/login');
+        navigate('/');
       }
     } else {
-      navigate('/login');
+      navigate('/');
     }
   }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('user-info');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
