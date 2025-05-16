@@ -10,7 +10,6 @@ function App() {
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Sync authentication state with localStorage
   useEffect(() => {
     const userInfo = localStorage.getItem("user-info");
     setIsAuthenticated(!!userInfo);
