@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleDashBoard from '../components/Dashboard/GoogleDashBoard';
 import GithubDashBoard from '../components/Dashboard/GitHubDashBoard';
+import FacebookDashBoard from '../components/Dashboard/FacebookDashBoard';
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -20,7 +21,6 @@ function Dashboard() {
     }
 
     console.log("Auth Provider:", provider);
-    // console.log("User Data:", userData);
 
     if (provider === 'google') {
         return <GoogleDashBoard userData={userData} />;
@@ -30,12 +30,16 @@ function Dashboard() {
         return <GithubDashBoard userData={userData} />;
     }
 
+    if (provider === 'facebook') {
+        return <FacebookDashBoard userData={userData} />;
+    }
+
     return (
         <div className="flex items-center justify-center h-screen bg-black text-white">
             <div className="bg-gray-900 p-10 rounded-2xl shadow-2xl text-center w-full max-w-md">
                 <h2 className="text-3xl font-bold mb-4">Access Restricted</h2>
                 <p className="text-lg mb-6 text-gray-300">
-                    You must log in using Google or GitHub to access the dashboard.
+                    You must log in using Google, GitHub, or Facebook to access the dashboard.
                 </p>
                 <button
                     onClick={() => navigate('/login')}

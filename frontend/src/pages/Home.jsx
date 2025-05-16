@@ -61,6 +61,31 @@ const Home = () => {
     window.addEventListener("message", receiveMessage);
   };
 
+  const handleFacebookLogin = () => {
+    const authWindow = window.open(
+      "http://localhost:5000/auth/facebook",
+      "Facebook Login",
+      "width=500,height=600"
+    );
+
+    const receiveMessage = (event) => {
+      if (event.origin !== "http://localhost:5000") return;
+
+      const { token, user } = event.data;
+
+      if (token && user) {
+        const userInfo = { ...user, token, authProvider: "facebook" };
+        localStorage.setItem("user-info", JSON.stringify(userInfo));
+        window.removeEventListener("message", receiveMessage);
+        navigate("/dashboard");
+      } else {
+        console.error("Invalid data received from Facebook login:", event.data);
+      }
+    };
+
+    window.addEventListener("message", receiveMessage);
+  };
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
       <div className="bg-[#111] p-8 sm:p-10 rounded-3xl border border-white/10 shadow-[0_0_25px_rgba(255,255,255,0.06)] w-full max-w-sm text-center">
@@ -94,6 +119,7 @@ const Home = () => {
           </button>
 
           <button
+            onClick={handleFacebookLogin}
             className="flex items-center justify-center gap-3 w-full bg-white text-black py-3 px-6 rounded-full font-medium shadow-md hover:shadow-xl hover:-translate-y-[1px] transition-all duration-200"
           >
             <img
