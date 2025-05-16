@@ -88,47 +88,54 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
-      <div className="bg-[#111] p-8 sm:p-10 rounded-3xl border border-white/10 shadow-[0_0_25px_rgba(255,255,255,0.06)] w-full max-w-sm text-center">
-        <h1 className="text-white text-2xl font-bold mb-8 tracking-wide">
-          Sign in with your Socials
-        </h1>
+      <div className="relative p-10 sm:p-12 w-full max-w-md text-center rounded-4xl overflow-hidden bg-[#0a0a0a] border border-gray-800 shadow-[0_0_60px_rgba(255,255,255,0.06)]">
 
-        <div className="flex flex-col gap-4">
-          <button
-            onClick={initiateGoogleLogin}
-            className="flex items-center justify-center gap-3 w-full bg-white text-black py-3 px-6 rounded-full font-medium shadow-md hover:shadow-xl hover:-translate-y-[1px] transition-all duration-200"
-          >
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google"
-              className="w-5 h-5"
-            />
-            Sign in with Google
-          </button>
+        <div className="absolute inset-0 z-0 rounded-3xl pointer-events-none">
+          <div className="absolute -inset-[2px] rounded-[inherit] bg-white/10 blur-xl opacity-30 shadow-[0_0_20px_rgba(255,255,255,0.05)]"></div>
+        </div>
 
-          <button
-            onClick={handleGitHubLogin}
-            className="flex items-center justify-center gap-3 w-full bg-white text-black py-3 px-6 rounded-full font-medium shadow-md hover:shadow-xl hover:-translate-y-[1px] transition-all duration-200"
-          >
-            <img
-              src="https://img.icons8.com/ios-glyphs/30/github.png"
-              alt="GitHub"
-              className="w-6 h-6"
-            />
-            Sign in with GitHub
-          </button>
+        <div className="relative z-10">
+          <h1 className="text-white text-3xl font-extrabold mb-8 tracking-tight drop-shadow-[0_2px_6px_rgba(255,255,255,0.08)]">
+            Sign in with your Socials
+          </h1>
 
-          <button
-            onClick={handleFacebookLogin}
-            className="flex items-center justify-center gap-3 w-full bg-white text-black py-3 px-6 rounded-full font-medium shadow-md hover:shadow-xl hover:-translate-y-[1px] transition-all duration-200"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/2048px-Facebook_f_logo_%282021%29.svg.png"
-              alt="Facebook"
-              className="w-5 h-5"
-            />
-            Sign in with Facebook
-          </button>
+          <div className="flex flex-col gap-4">
+            <button
+              onClick={initiateGoogleLogin}
+              className="flex items-center justify-center gap-3 w-full bg-white text-black py-3 px-6 rounded-full font-semibold shadow-md hover:shadow-lg hover:-translate-y-[2px] hover:scale-[1.03] transition-all duration-300"
+            >
+              <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                alt="Google"
+                className="w-5 h-5"
+              />
+              Sign in with Google
+            </button>
+
+            <button
+              onClick={handleGitHubLogin}
+              className="flex items-center justify-center gap-3 w-full bg-[#171717] text-white py-3 px-6 rounded-full font-semibold shadow-md hover:shadow-lg hover:-translate-y-[2px] hover:scale-[1.03] transition-all duration-300"
+            >
+              <img
+                src="https://img.icons8.com/ios-glyphs/30/github.png"
+                alt="GitHub"
+                className="w-6 h-6 invert"
+              />
+              Sign in with GitHub
+            </button>
+
+            <button
+              onClick={handleFacebookLogin}
+              className="flex items-center justify-center gap-3 w-full bg-[#0866FF] text-white py-3 px-6 rounded-full font-semibold shadow-md hover:shadow-xl hover:-translate-y-[2px] hover:scale-[1.03] transition-all duration-300"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"
+                alt="Facebook"
+                className="w-5 h-5"
+              />
+              Sign in with Facebook
+            </button>
+          </div>
         </div>
       </div>
     </div>
