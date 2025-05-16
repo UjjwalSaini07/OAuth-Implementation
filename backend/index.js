@@ -28,11 +28,12 @@ app.use('/', (req, res, next) => {
 
 app.use(
     session({
-        secret: process.env.JWT_SECRET,
+        secret: process.env.JWT_SECRET || '$2a$07$zw5Y/ksc9Goq/EhJuw7lXe3dddswyIHIDmEbtujnnCG/1Io6LP7di',
         resave: false,
         saveUninitialized: true,
     })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth', authRoutes);
