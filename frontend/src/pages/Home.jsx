@@ -37,10 +37,15 @@ const Home = () => {
   });
 
   const handleGitHubLogin = () => {
+    const width = 500;
+    const height = 600;
+    const left = window.screenX + (window.innerWidth - width) / 2;
+    const top = window.screenY + (window.innerHeight - height) / 2;
+
     const authWindow = window.open(
       "http://localhost:5000/auth/github",
       "GitHub Login",
-      "width=500,height=600"
+      `width=${width},height=${height},left=${left},top=${top}`
     );
 
     const receiveMessage = (event) => {
@@ -62,10 +67,15 @@ const Home = () => {
   };
 
   const handleFacebookLogin = () => {
+    const width = 500;
+    const height = 600;
+    const left = window.screenX + (window.innerWidth - width) / 2;
+    const top = window.screenY + (window.innerHeight - height) / 2;
+
     const authWindow = window.open(
       "http://localhost:5000/auth/facebook",
       "Facebook Login",
-      "width=500,height=600"
+      `width=${width},height=${height},left=${left},top=${top}`
     );
 
     const receiveMessage = (event) => {
