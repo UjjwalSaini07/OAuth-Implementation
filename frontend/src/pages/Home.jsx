@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import NodeAuth from "../components/NodejsAuth/NodeAuth";
 import FireAuth from "../components/FireBaseAuth/FireAuth";
+import Auth0 from "../components/ThirdPartyAuth/ThirdPartyOAuth";
 
 const Home = () => {
   const [mode, setMode] = useState("Nodejs-OAuth");
 
-  // Load mode from localStorage on first render
   useEffect(() => {
     const savedMode = localStorage.getItem("authMode");
     if (savedMode) {
@@ -25,6 +25,8 @@ const Home = () => {
         return <NodeAuth />;
       case "Firebase-OAuth":
         return <FireAuth />;
+      case "Auth0-OAuth":
+        return <Auth0 />;
       default:
         return <NodeAuth />;
     }
@@ -34,7 +36,7 @@ const Home = () => {
     <div className="min-h-screen w-full bg-black flex flex-col">
       <header className="w-full flex justify-center py-4 bg-black mt-4 fixed overflow-hidden">
         <div className="flex bg-black rounded-full px-1 py-1 border-2 border-white shadow-md">
-          {["Nodejs-OAuth", "Firebase-OAuth"].map((item) => (
+          {["Nodejs-OAuth", "Firebase-OAuth", "Auth0-OAuth"].map((item) => (
             <button
               key={item}
               onClick={() => handleModeChange(item)}
